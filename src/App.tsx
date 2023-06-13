@@ -36,6 +36,8 @@ type FormType = z.infer<typeof formValidation>;
 function App() {
   const [open, setOpen] = useState(false);
   const [msgType, setMsgType] = useState<'success' | 'error'>('success');
+  const [isLoading, setIsLoading] = useState(false);
+
   const modalRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
@@ -47,12 +49,13 @@ function App() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitted, isSubmitting },
+    formState: { errors, isSubmitted },
   } = useForm<FormType>({
     resolver: zodResolver(formValidation),
   });
 
   const handleSend: SubmitHandler<FormType> = (_, e) => {
+    setIsLoading(true);
     if (!e) return;
     const myForm = e.target;
     const formData = new FormData(myForm);
@@ -70,6 +73,7 @@ function App() {
         setMsgType('error');
         setOpen(true);
       });
+    setIsLoading(false);
   };
 
   return (
@@ -85,7 +89,7 @@ function App() {
           data-netlify='true'
           name='form-submission'
         >
-          <input type='hidden' name='form-submission' value='form-submission' />
+          <input type='hidden' name='form-name' value='form-submission' />
 
           <Input
             {...register('name')}
@@ -116,7 +120,7 @@ function App() {
           />
           <button
             type='submit'
-            disabled={isSubmitting}
+            disabled={isLoading}
             className='w-full rounded-md bg-primary py-2 font-semibold text-white disabled:cursor-not-allowed disabled:bg-gray-700'
           >
             Envoyer

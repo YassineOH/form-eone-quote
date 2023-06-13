@@ -19,6 +19,20 @@
 </head>
 
 <body class="bg-primary bg-opacity-80 backdrop-blur-md">
+  <form name="submission"
+    netlify
+    netlify-honeypot="bot-field"
+    hidden>
+    <input type="text"
+      name="name" />
+    <input type="text"
+      name="address" />
+    <input type="tel"
+      name="phone" />
+    <input type="number"
+      name="bill" />
+  </form>
+
   <div id="root"></div>
   <script type="module"
     src="/src/main.tsx"></script>
