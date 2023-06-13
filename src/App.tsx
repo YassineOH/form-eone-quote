@@ -84,6 +84,7 @@ function App() {
           className='space-y-4'
           onSubmit={handleSubmit(handleSend)}
           data-netlify='true'
+          method='post'
           name='form-submission'
         >
           <input type='hidden' name='form-name' value='form-submission' />
