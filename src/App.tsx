@@ -85,9 +85,9 @@ function App() {
           onSubmit={handleSubmit(handleSend)}
           data-netlify='true'
           method='post'
-          name='form-submission'
+          name='Demande'
         >
-          <input type='hidden' name='form-name' value='form-submission' />
+          <input type='hidden' name='form-name' value='Demande' />
 
           <Input
             {...register('name')}
