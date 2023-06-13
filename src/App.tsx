@@ -79,7 +79,14 @@ function App() {
         <h1 className='text-center text-xl font-semibold'>
           Remplir la formulaire ci-dessous
         </h1>
-        <form className='space-y-4' onSubmit={handleSubmit(handleSend)}>
+        <form
+          className='space-y-4'
+          onSubmit={handleSubmit(handleSend)}
+          data-netlify='true'
+          name='form-submission'
+        >
+          <input type='hidden' name='form-submission' value='form-submission' />
+
           <Input
             {...register('name')}
             label='Nom et Prénom'
