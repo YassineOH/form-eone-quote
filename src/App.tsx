@@ -6,6 +6,7 @@ import {
   useEffect,
   useRef,
 } from 'react';
+import axios from 'axios';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -54,26 +55,22 @@ function App() {
     resolver: zodResolver(formValidation),
   });
 
-  const handleSend: SubmitHandler<FormType> = (_, e) => {
+  const handleSend: SubmitHandler<FormType> = async (_, e) => {
+    e?.preventDefault();
     setIsLoading(true);
     if (!e) return;
     const myForm = e.target;
     const formData = new FormData(myForm);
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      body: new URLSearchParams(formData as any).toString(),
-    })
-      .then(() => {
-        setOpen(true);
-      })
-      .catch((error) => {
-        console.log(error);
-        setMsgType('error');
-        setOpen(true);
-      });
+
+    try {
+      await axios.post('/', formData);
+    } catch (error) {
+      console.log(error);
+      setMsgType('error');
+    }
+
     setIsLoading(false);
+    setOpen(true);
   };
 
   return (
